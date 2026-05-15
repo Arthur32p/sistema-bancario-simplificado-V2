@@ -2,6 +2,8 @@ package models;
 
 import interfaces.Tributavel;
 
+import java.math.BigDecimal;
+
 public class ContaCorrente extends Conta implements Tributavel {
 
     private double limite;
@@ -31,7 +33,7 @@ public class ContaCorrente extends Conta implements Tributavel {
 
     @Override
     public double calcularImposto() {
-        return 0.10;
+        return 0.5;
     }
 
 }

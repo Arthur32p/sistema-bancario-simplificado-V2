@@ -1,5 +1,7 @@
 package models;
 
+import java.math.BigDecimal;
+
 public abstract class Conta {
 
     private int numero;

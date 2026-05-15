@@ -114,7 +114,7 @@ module UI
       base.insert(idx, *extras)
     end
 
-    # ── Dispatcher ─────────────────────────────────────────────────────────────
+    # ── servidor.Dispatcher ─────────────────────────────────────────────────────────────
     def _despachar(opcao, conta)
       case opcao
       when :depositar   then _depositar(conta)

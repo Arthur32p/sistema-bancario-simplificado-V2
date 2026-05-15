@@ -1,5 +1,7 @@
 package models;
 
+import java.math.BigDecimal;
+
 public class ContaPoupanca extends Conta{
 
     private double rendimento;
