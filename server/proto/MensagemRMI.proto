@@ -75,7 +75,12 @@ message StatusResponse {
 
 message LoginResponse {
   int32 status = 1;
-  int32 numeroConta = 2;
+  int32 tipo = 2;
+  int32 numeroConta = 3;
+  string nomeTitular = 4;
+  double saldo = 5;
+  double limite = 6;
+  double rendimento = 7;
 }
 
 message TransferirResponse {
