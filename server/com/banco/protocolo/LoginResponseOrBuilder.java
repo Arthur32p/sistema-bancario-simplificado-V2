@@ -12,7 +12,7 @@ public interface LoginResponseOrBuilder extends
 
   /**
    * <code>int32 status = 1;</code>
-   * @return The status.
+   * @return The st++++++++++++++++++++++++++++++++++++++++++++++++++++++++++9atus.
    */
   int getStatus();
 

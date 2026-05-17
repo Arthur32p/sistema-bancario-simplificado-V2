@@ -1,0 +1,42 @@
+# ── Saída de compilação ──────────────────────────────────────────────────────
+out/
+*.class
+
+# ── IntelliJ IDEA ────────────────────────────────────────────────────────────
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# ── Maven / Gradle (caso migre no futuro) ────────────────────────────────────
+target/
+build/
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+
+# ── Sistema operacional ──────────────────────────────────────────────────────
+# Windows
+Thumbs.db
+desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+
+# Linux
+*~
+
+# ── Logs e temporários ───────────────────────────────────────────────────────
+*.log
+*.tmp
+*.swp
+
+# ── Protobuf gerado ──────────────────────────────────────────────────────────
+# Descomente se quiser ignorar as classes geradas pelo protoc
+# server/com/banco/protocolo/
+
+# ── Credenciais e configurações locais ───────────────────────────────────────
+*.env
+local.properties
