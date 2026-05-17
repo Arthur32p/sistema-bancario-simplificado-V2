@@ -6,10 +6,6 @@ import session.Sessao;
 
 import java.util.Scanner;
 
-/**
- * Tela da conta logada — inspirada em tela_conta.rb.
- * Exibe o dashboard e o menu de operações bancárias.
- */
 public class TelaConta {
 
     private final Scanner sc;
@@ -57,7 +53,6 @@ public class TelaConta {
         }
     }
 
-    // ── Dashboard ────────────────────────────────────────────────────
 
     private void renderizarDashboard() {
         Banner.limpar();
@@ -274,7 +269,6 @@ public class TelaConta {
         Banner.aguardeEnter(sc);
     }
 
-    // ── Helpers ──────────────────────────────────────────────────────
 
     private Double lerValor(String label) {
         Banner.espaco();

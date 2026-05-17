@@ -1,9 +1,5 @@
 package session;
 
-/**
- * Dados da sessão do usuário logado.
- * Armazena informações obtidas no login para uso nas telas.
- */
 public class Sessao {
     private final int numeroConta;
     private final String cpf;

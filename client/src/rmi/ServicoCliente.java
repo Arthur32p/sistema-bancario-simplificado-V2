@@ -5,14 +5,8 @@ import session.Sessao;
 
 import java.rmi.RemoteException;
 
-/**
- * Fachada de alto nível para operações de cliente (cadastro e login).
- * Usa ConexaoRMI.doOperation() para invocar métodos remotos,
- * serializa/desserializa via Protobuf.
- */
 public class ServicoCliente {
 
-    // IDs de método conforme Dispatcher do servidor
     private static final int OP_CADASTRO = 1;
     private static final int OP_LOGIN    = 2;
 
@@ -22,21 +16,10 @@ public class ServicoCliente {
         this.conexao = conexao;
     }
 
-    // ── Resultado de operação ────────────────────────────────────────
 
     public record ResultadoCadastro(boolean sucesso, String mensagem) {}
     public record ResultadoLogin(boolean sucesso, String mensagem, Sessao sessao) {}
 
-    // ── Operações remotas ────────────────────────────────────────────
-
-    /**
-     * Cadastra um novo cliente e abre uma conta.
-     *
-     * @param nome   nome completo
-     * @param cpf    CPF do cliente
-     * @param senha  senha da conta
-     * @param tipo   1 = Corrente, 2 = Poupança
-     */
     public ResultadoCadastro cadastrar(String nome, String cpf, String senha, int tipo) {
         try {
             CadastroRequest req = CadastroRequest.newBuilder()
@@ -64,13 +47,6 @@ public class ServicoCliente {
         }
     }
 
-    /**
-     * Realiza login e retorna uma Sessao em caso de sucesso.
-     *
-     * @param cpf   CPF do cliente
-     * @param senha senha da conta
-     * @param tipo  1 = Corrente, 2 = Poupança
-     */
     public ResultadoLogin login(String cpf, String senha, int tipo) {
         try {
             LoginRequest req = LoginRequest.newBuilder()

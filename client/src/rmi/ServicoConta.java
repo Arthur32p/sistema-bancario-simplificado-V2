@@ -5,13 +5,9 @@ import com.banco.protocolo.*;
 import java.rmi.RemoteException;
 import java.util.List;
 
-/**
- * Fachada de alto nível para operações bancárias sobre contas.
- * Serializa via Protobuf e invoca o servidor via ConexaoRMI.doOperation().
- */
+
 public class ServicoConta {
 
-    // IDs de método conforme Dispatcher do servidor
     private static final int OP_SACAR              = 3;
     private static final int OP_DEPOSITAR          = 4;
     private static final int OP_TRANSFERIR         = 5;
@@ -25,7 +21,6 @@ public class ServicoConta {
         this.conexao = conexao;
     }
 
-    // ── Tipos de resultado ───────────────────────────────────────────
 
     public enum StatusOp { OK, CONTA_INVALIDA, SALDO_INSUFICIENTE, ERRO }
 
@@ -45,11 +40,6 @@ public class ServicoConta {
         public boolean ok() { return status == StatusOp.OK; }
     }
 
-    // ── Operações remotas ────────────────────────────────────────────
-
-    /**
-     * Realiza um depósito na conta informada.
-     */
     public ResultadoSimples depositar(int numeroConta, double valor) {
         try {
             DepositoRequest req = DepositoRequest.newBuilder()
@@ -68,9 +58,6 @@ public class ServicoConta {
         }
     }
 
-    /**
-     * Realiza um saque na conta informada.
-     */
     public ResultadoSimples sacar(int numeroConta, double valor) {
         try {
             SacarRequest req = SacarRequest.newBuilder()
@@ -89,9 +76,6 @@ public class ServicoConta {
         }
     }
 
-    /**
-     * Realiza uma transferência entre contas.
-     */
     public ResultadoTransferencia transferir(int numOrigem, int numDestino, double valor) {
         try {
             TransferirRequest req = TransferirRequest.newBuilder()
@@ -103,8 +87,6 @@ public class ServicoConta {
             byte[] resposta = conexao.doOperation("ContaService", OP_TRANSFERIR, req.toByteArray());
             MensagemRMI reply = MensagemRMI.parseFrom(resposta);
 
-            // Servidor retorna TransferirResponse em caso de sucesso
-            // e StatusResponse em caso de erro
             try {
                 TransferirResponse tr = TransferirResponse.parseFrom(reply.getArguments());
                 if (tr.getStatus() == 0) {
@@ -113,7 +95,6 @@ public class ServicoConta {
                 }
             } catch (Exception ignored) {}
 
-            // Tenta interpretar como StatusResponse (erro)
             StatusResponse sr = StatusResponse.parseFrom(reply.getArguments());
             return switch (sr.getStatus()) {
                 case -1 -> new ResultadoTransferencia(StatusOp.CONTA_INVALIDA,
@@ -132,9 +113,6 @@ public class ServicoConta {
         }
     }
 
-    /**
-     * Realiza pagamento de boleto/conta (apenas ContaCorrente).
-     */
     public ResultadoSimples pagar(int numeroConta, double valor, String descricao) {
         try {
             PagarRequest req = PagarRequest.newBuilder()
@@ -154,9 +132,6 @@ public class ServicoConta {
         }
     }
 
-    /**
-     * Projeta o rendimento de uma conta poupança.
-     */
     public ResultadoRendimento projetarRendimento(int numeroConta, int meses) {
         try {
             ProjetarRendimentoRequest req = ProjetarRendimentoRequest.newBuilder()
@@ -183,9 +158,6 @@ public class ServicoConta {
         }
     }
 
-    /**
-     * Consulta o extrato de movimentações da conta.
-     */
     public ResultadoExtrato extrato(int numeroConta) {
         try {
             ExtratoRequest req = ExtratoRequest.newBuilder()
@@ -209,8 +181,6 @@ public class ServicoConta {
                     "Erro de comunicação: " + e.getMessage(), List.of());
         }
     }
-
-    // ── Helper privado ───────────────────────────────────────────────
 
     private ResultadoSimples parsarStatusSimples(byte[] resposta,
             String msgOk, String msgContaInvalida, String msgSaldoInsuf)

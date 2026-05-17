@@ -1,10 +1,6 @@
 package ui;
 
-/**
- * Helpers de UI para o terminal.
- * Inspirado no banner.rb do protótipo Ruby — cuida de layout,
- * "cores" via ANSI e formatação do terminal.
- */
+
 public class Banner {
 
     public static final int LARGURA   = 60;
@@ -14,7 +10,6 @@ public class Banner {
     public static final String SEPARADOR      = "─".repeat(LARGURA);
     public static final String SEPARADOR_DUPLO = "═".repeat(LARGURA);
 
-    // ── Códigos ANSI ────────────────────────────────────────────────
     private static final String RESET   = "\u001B[0m";
     private static final String BOLD    = "\u001B[1m";
     private static final String CYAN    = "\u001B[36m";
@@ -38,14 +33,13 @@ public class Banner {
         " ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═════╝ "
     };
 
-    // ── Layout ──────────────────────────────────────────────────────
+
 
     public static String margem() {
-        return "  "; // margem fixa simples para terminal
+        return "  ";
     }
 
     public static void limpar() {
-        // Funciona no Windows (cls) e Unix (clear)
         try {
             String os = System.getProperty("os.name").toLowerCase();
             ProcessBuilder pb = os.contains("win")
@@ -53,7 +47,6 @@ public class Banner {
                     : new ProcessBuilder("clear");
             pb.inheritIO().start().waitFor();
         } catch (Exception e) {
-            // fallback: imprime várias linhas em branco
             System.out.print("\033[H\033[2J");
             System.out.flush();
         }
@@ -132,7 +125,6 @@ public class Banner {
         sc.nextLine();
     }
 
-    // ── Formatação de valores ────────────────────────────────────────
 
     public static String formatarDinheiro(double valor) {
         return String.format("R$ %.2f", valor);
@@ -158,7 +150,6 @@ public class Banner {
         return "\u001B[1;34m" + " " + texto + " " + RESET;
     }
 
-    // ── Helpers de cor ──────────────────────────────────────────────
 
     public static String ciano(String s)    { return B_CYAN   + s + RESET; }
     public static String verde(String s)    { return B_GREEN  + s + RESET; }
@@ -168,7 +159,6 @@ public class Banner {
     public static String branco(String s)   { return B_WHITE  + s + RESET; }
     public static String bold(String s)     { return BOLD     + s + RESET; }
 
-    // ── Helpers de layout ───────────────────────────────────────────
 
     public static String centralizar(String texto, int largura) {
         if (texto.length() >= largura) return texto;
