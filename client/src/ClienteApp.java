@@ -5,21 +5,15 @@ import ui.TelaLogin;
 import ui.TelaCadastro;
 import ui.TelaConta;
 
-/**
- * Ponto de entrada do cliente bancário RMI.
- * Gerencia o fluxo principal: menu inicial → login/cadastro → conta.
- */
 public class ClienteApp {
 
     public static void main(String[] args) {
-        // Endereço do servidor (pode ser passado como argumento)
-        String host = (args.length > 0) ? args[0] : "localhost";
-        int porta   = (args.length > 1) ? Integer.parseInt(args[1]) : 1099;
+        String host = "10.10.255.63";
+        int porta   = 1099;
 
         Banner.limpar();
         Banner.exibirCabecalho();
 
-        // Tenta conectar ao servidor
         ConexaoRMI conexao;
         try {
             conexao = new ConexaoRMI(host, porta);
@@ -33,7 +27,6 @@ public class ClienteApp {
         Banner.sucesso("Conectado ao servidor " + host + ":" + porta);
         pausa(1000);
 
-        // Loop do menu principal
         java.util.Scanner sc = new java.util.Scanner(System.in);
         boolean rodando = true;
 
