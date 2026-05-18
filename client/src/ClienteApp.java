@@ -1,3 +1,5 @@
+package src;
+
 import rmi.ConexaoRMI;
 import session.Sessao;
 import ui.Banner;
