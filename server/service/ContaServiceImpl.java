@@ -41,9 +41,12 @@ public class ContaServiceImpl extends UnicastRemoteObject implements ContaServic
     }
 
     @Override
-    public synchronized boolean sacar(Conta conta, double valor){
+    public synchronized boolean sacar(Conta conta, double valor, boolean movimentacao){
         if(valor >= 0 && conta.getSaldo() >= valor){
             conta.setSaldo(conta.getSaldo() - valor);
+            if(!movimentacao){
+                registrar(conta.getNumero(), "Saque de -R$ " + valor);
+            }
             return true;
         }
 
@@ -51,9 +54,12 @@ public class ContaServiceImpl extends UnicastRemoteObject implements ContaServic
     }
 
     @Override
-    public synchronized boolean depositar(Conta conta, double valor){
+    public synchronized boolean depositar(Conta conta, double valor, boolean movimentacao){
         if(valor > 0){
             conta.setSaldo(conta.getSaldo() + valor);
+            if(!movimentacao){
+                registrar(conta.getNumero(), "Depósito de +R$ " + valor);
+            }
             return true;
         }
 
@@ -72,8 +78,8 @@ public class ContaServiceImpl extends UnicastRemoteObject implements ContaServic
 
         double totalADebitar = valor + imposto;
 
-        if(valor <= limite && sacar(origem, totalADebitar) ){
-            depositar(destino, valor);
+        if(valor <= limite && sacar(origem, totalADebitar, true) ){
+            depositar(destino, valor, true);
 
             registrar(origem.getNumero(), "Transferência enviada: -R$ " + valor + " (Imposto: R$ " + imposto + ")");
             registrar(destino.getNumero(), "Transferência recebida: +R$ " + valor + " de " + origem.getTitular().getNome());
@@ -87,7 +93,7 @@ public class ContaServiceImpl extends UnicastRemoteObject implements ContaServic
     @Override
     public synchronized boolean pagar(Conta conta, double valor, String descricao){
         if(conta instanceof ContaCorrente cc){
-            if (sacar(cc, valor)){
+            if (sacar(cc, valor, true)){
                 registrar(conta.getNumero(), "Pagamento: " + descricao + " | Valor: -R$ " + valor);
 
                 return true;

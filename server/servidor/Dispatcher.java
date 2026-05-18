@@ -106,7 +106,7 @@ public class Dispatcher {
                         reply.setArguments(StatusResponse.newBuilder()
                                 .setStatus(-1)
                                 .build().toByteString());
-                    } else if (contaService.sacar(contaSaque, sacarRequest.getValorSaque())) {
+                    } else if (contaService.sacar(contaSaque, sacarRequest.getValorSaque(), false)) {
                         reply.setArguments(StatusResponse.newBuilder()
                                 .setStatus(0)
                                 .build().toByteString());
@@ -126,7 +126,7 @@ public class Dispatcher {
                         reply.setArguments(StatusResponse.newBuilder()
                                 .setStatus(-1)
                                 .build().toByteString());
-                    } else if (contaService.depositar(contaDeposito, depositoRequest.getValorDeposito())) {
+                    } else if (contaService.depositar(contaDeposito, depositoRequest.getValorDeposito(), true)) {
                         reply.setArguments(StatusResponse.newBuilder()
                                 .setStatus(0)
                                 .build().toByteString());

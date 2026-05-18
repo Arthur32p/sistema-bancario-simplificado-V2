@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface ContaService extends Remote {
     boolean abrirConta(Cliente cliente, String senha, int tipo) throws RemoteException;
-    boolean sacar(Conta conta, double valor) throws RemoteException;
-    boolean depositar(Conta conta, double valor) throws RemoteException;
+    boolean sacar(Conta conta, double valor, boolean movimentacao) throws RemoteException;
+    boolean depositar(Conta conta, double valor, boolean movimentacao) throws RemoteException;
     boolean transferir(Conta origem, Conta destino, double valor) throws RemoteException;
     boolean pagar(Conta conta, double valor, String descricao) throws RemoteException;
     double projetarRendimento(Conta conta, int meses) throws RemoteException;

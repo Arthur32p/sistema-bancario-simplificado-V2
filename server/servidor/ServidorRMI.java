@@ -44,6 +44,8 @@ public class ServidorRMI extends UnicastRemoteObject implements ServidorInterfac
     public static void main(String[] args) {
         try {
 
+            System.setProperty("java.rmi.server.hostname", "10.10.255.63");
+
             LocateRegistry.createRegistry(1099);
 
             ServidorRMI servidor = new ServidorRMI();
@@ -53,10 +55,5 @@ public class ServidorRMI extends UnicastRemoteObject implements ServidorInterfac
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    // Usado apenas para testes internos
-    public ContaService getContaService() {
-        return contaService;
     }
 }

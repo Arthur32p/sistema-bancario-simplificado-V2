@@ -6,7 +6,10 @@ import session.Sessao;
 
 import java.util.Scanner;
 
-
+/**
+ * Tela de login — inspirada no tela_login.rb.
+ * Coleta CPF, senha e tipo de conta, invoca o servidor via RMI.
+ */
 public class TelaLogin {
 
     private final Scanner sc;
@@ -17,6 +20,10 @@ public class TelaLogin {
         this.servicoCliente = new ServicoCliente(conexao);
     }
 
+    /**
+     * Exibe a tela de login e retorna uma Sessao em caso de sucesso,
+     * ou null se o usuário cancelar / houver erro.
+     */
     public Sessao exibir() {
         Banner.limpar();
         Banner.exibirCabecalho("ACESSO À CONTA");
@@ -70,6 +77,8 @@ public class TelaLogin {
         }
     }
 
+    // ── Helpers ──────────────────────────────────────────────────────
+
     private String lerCampo(String label) {
         Banner.prompt(label);
         String valor = sc.nextLine().trim();
@@ -82,7 +91,8 @@ public class TelaLogin {
     }
 
     private String lerSenha(String label) {
-
+        // Em Java puro no terminal, lemos normalmente (sem mascaramento nativo fácil)
+        // Console.readPassword() funciona apenas quando não há redirecionamento
         Banner.prompt(label);
         java.io.Console console = System.console();
         if (console != null) {
@@ -94,6 +104,7 @@ public class TelaLogin {
             }
             return new String(chars);
         } else {
+            // Fallback quando Console não está disponível (IDE, pipe)
             String valor = sc.nextLine().trim();
             if (valor.isBlank()) {
                 Banner.erro("Senha obrigatória.");

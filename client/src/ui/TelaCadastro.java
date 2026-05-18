@@ -5,7 +5,10 @@ import rmi.ServicoCliente;
 
 import java.util.Scanner;
 
-
+/**
+ * Tela de cadastro — inspirada em tela_cadastro.rb.
+ * Coleta dados do cliente e abre conta via RMI.
+ */
 public class TelaCadastro {
 
     private static final String[][] TIPOS = {
@@ -107,6 +110,8 @@ public class TelaCadastro {
 
         pausa(2500);
     }
+
+    // ── Helpers ──────────────────────────────────────────────────────
 
     private void exibirResumo(String nome, String cpf, int tipo) {
         String[] info = TIPOS[tipo - 1];
